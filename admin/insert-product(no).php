@@ -7,16 +7,30 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 	if (isset($_POST['submit'])) {
 		$category = $_POST['category'];
+		$subcat = $_POST['subcategory'];
 		$productname = $_POST['productName'];
 		$productcompany = $_POST['productCompany'];
+		$productprice = $_POST['productprice'];
+		$productpricebd = $_POST['productpricebd'];
 		$productdescription = $_POST['productDescription'];
+		$productscharge = $_POST['productShippingcharge'];
 		$productavailability = $_POST['productAvailability'];
-		$unit = $_POST['unit'];
+		$productimage1 = $_FILES["productimage1"]["name"];
+		$productimage2 = $_FILES["productimage2"]["name"];
+		$productimage3 = $_FILES["productimage3"]["name"];
 		//for getting product id
 		$query = mysqli_query($con, "select max(id) as pid from products");
 		$result = mysqli_fetch_array($query);
 		$productid = $result['pid'] + 1;
-		$sql = mysqli_query($con, "insert into products(category,productName,productCompany,productDescription,productAvailability,unit) values('$category','$productname','$productcompany','$productdescription','$productavailability','$unit')");
+		$dir = "productimages/$productid";
+		if (!is_dir($dir)) {
+			mkdir("productimages/" . $productid);
+		}
+
+		move_uploaded_file($_FILES["productimage1"]["tmp_name"], "productimages/$productid/" . $_FILES["productimage1"]["name"]);
+		move_uploaded_file($_FILES["productimage2"]["tmp_name"], "productimages/$productid/" . $_FILES["productimage2"]["name"]);
+		move_uploaded_file($_FILES["productimage3"]["tmp_name"], "productimages/$productid/" . $_FILES["productimage3"]["name"]);
+		$sql = mysqli_query($con, "insert into products(category,subCategory,productName,productCompany,productPrice,productDescription,shippingCharge,productAvailability,productImage1,productImage2,productImage3,productPriceBeforeDiscount) values('$category','$subcat','$productname','$productcompany','$productprice','$productdescription','$productscharge','$productavailability','$productimage1','$productimage2','$productimage3','$productpricebd')");
 		$_SESSION['msg'] = "Product Inserted Successfully !!";
 	}
 
@@ -38,6 +52,25 @@ if (strlen($_SESSION['alogin']) == 0) {
 		<script type="text/javascript">
 			bkLib.onDomLoaded(nicEditors.allTextAreas);
 		</script>
+
+		<script>
+			function getSubcat(val) {
+				$.ajax({
+					type: "POST",
+					url: "get_subcat.php",
+					data: 'cat_id=' + val,
+					success: function(data) {
+						$("#subcategory").html(data);
+					}
+				});
+			}
+
+			function selectCountry(val) {
+				$("#search-box").val(val);
+				$("#suggesstion-box").hide();
+			}
+		</script>
+
 
 	</head>
 
@@ -79,7 +112,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Categoría</label>
 											<div class="controls">
-												<select name="category" class="span8 tip" required>
+												<select name="category" class="span8 tip" onChange="getSubcat(this.value);" required>
 													<option value="">Seleccione categoría</option>
 													<?php $query = mysqli_query($con, "select * from category");
 													while ($row = mysqli_fetch_array($query)) { ?>
@@ -89,6 +122,16 @@ if (strlen($_SESSION['alogin']) == 0) {
 												</select>
 											</div>
 										</div>
+
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Sub Categoría</label>
+											<div class="controls">
+												<select name="subcategory" id="subcategory" class="span8 tip" required>
+												</select>
+											</div>
+										</div>
+
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Nombre del producto</label>
@@ -103,32 +146,69 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<input type="text" name="productCompany" placeholder="Ingrese marca del producto" class="span8 tip" required>
 											</div>
 										</div>
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Precio de producto sin descuento</label>
+											<div class="controls">
+												<input type="text" name="productpricebd" placeholder="Ingrese descuento del producto" class="span8 tip" required>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Precio del producto con descuento(Precio de venta)</label>
+											<div class="controls">
+												<input type="text" name="productprice" placeholder="Ingrese precio de venta" class="span8 tip" required>
+											</div>
+										</div>
 
 										<div class="control-group">
 											<label class="control-label" for="basicinput">Descripción del producto</label>
 											<div class="controls">
-												<textarea name="productDescription" placeholder="Ingrese descripción del producto" rows="6" class="span8 tip"></textarea>
+												<textarea name="productDescription" placeholder="Ingrese descripción del producto" rows="6" class="span8 tip">
+</textarea>
 											</div>
 										</div>
 
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Cantidad Disponible</label>
+											<label class="control-label" for="basicinput">Costo de envío</label>
 											<div class="controls">
-												<input type=number name="productAvailability" id="productAvailability" class="span8 tip" required>
+												<input type="text" name="productShippingcharge" placeholder="Ingres costo de envio" class="span8 tip" required>
 											</div>
 										</div>
 
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Unidad</label>
+											<label class="control-label" for="basicinput">Disponibilidad de Producto</label>
 											<div class="controls">
-												<select name="unit" class="span8 tip" required>
-													<option value="">Seleccione categoría</option>
-													<?php $query = mysqli_query($con, "select * from unit");
-													while ($row = mysqli_fetch_array($query)) { ?>
-
-														<option value="<?php echo $row['id']; ?>"><?php echo $row['unitType']; ?></option>
-													<?php } ?>
+												<select name="productAvailability" id="productAvailability" class="span8 tip" required>
+													<option value="">Seleccionar</option>
+													<option value="En Stock">En Stock</option>
+													<option value="Fuera de Stock">Fuera de Stock</option>
 												</select>
+											</div>
+										</div>
+
+
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Imagen 01 del producto</label>
+											<div class="controls">
+												<input type="file" name="productimage1" id="productimage1" value="" class="span8 tip" required>
+											</div>
+										</div>
+
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Imagen 02 del producto</label>
+											<div class="controls">
+												<input type="file" name="productimage2" class="span8 tip">
+											</div>
+										</div>
+
+
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Imagen 03 del producto</label>
+											<div class="controls">
+												<input type="file" name="productimage3" class="span8 tip">
 											</div>
 										</div>
 
