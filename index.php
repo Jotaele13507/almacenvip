@@ -208,16 +208,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 
 													<div class="product-info text-left">
 														<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>"><?php echo htmlentities($row['productName']); ?></a></h3>
-														<div class="rating rateit-small"></div>
 														<div class="description"></div>
-
-														<div class="product-price">
-															<span class="price">
-																$.<?php echo htmlentities($row['productPrice']); ?> </span>
-															<span class="price-before-discount">$.<?php echo htmlentities($row['productPriceBeforeDiscount']); ?> </span>
-
-														</div><!-- /.product-price -->
-
 													</div><!-- /.product-info -->
 													<div class="action"><a href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="lnk btn btn-primary">Agregar a carrito</a></div>
 												</div><!-- /.product -->
@@ -261,15 +252,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 
 													<div class="product-info text-left">
 														<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>"><?php echo htmlentities($row['productName']); ?></a></h3>
-														<div class="rating rateit-small"></div>
 														<div class="description"></div>
-
-														<div class="product-price">
-															<span class="price">
-																$. <?php echo htmlentities($row['productPrice']); ?> </span>
-															<span class="price-before-discount">$.<?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
-
-														</div><!-- /.product-price -->
 
 													</div><!-- /.product-info -->
 													<div class="action"><a href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="lnk btn btn-primary">Agregar a carrito</a></div>
@@ -346,7 +329,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 							<div class="product-slider">
 								<div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
 									<?php
-									$ret = mysqli_query($con, "select * from products where category=4 and subCategory=21");
+									$ret = mysqli_query($con, "select * from products where category=4");
 									while ($row = mysqli_fetch_array($ret)) {
 									?>
 
@@ -403,7 +386,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 								<div class="owl-carousel homepage-owl-carousel custom-carousel outer-top-xs owl-theme" data-item="2">
 
 									<?php
-									$ret = mysqli_query($con, "select * from products where category=3 and subCategory=8");
+									$ret = mysqli_query($con, "select * from products where category=3");
 									while ($row = mysqli_fetch_array($ret)) {
 									?>
 
@@ -422,16 +405,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 
 													<div class="product-info text-left">
 														<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>"><?php echo htmlentities($row['productName']); ?></a></h3>
-														<div class="rating rateit-small"></div>
 														<div class="description"></div>
-
-														<div class="product-price">
-															<span class="price">
-																$. <?php echo htmlentities($row['productPrice']); ?> </span>
-															<span class="price-before-discount">$.<?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
-
-														</div>
-
 													</div>
 													<div class="action"><a href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="lnk btn btn-primary">Agregar a carrito</a></div>
 												</div>
@@ -468,16 +442,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 
 													<div class="product-info text-left">
 														<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>"><?php echo htmlentities($row['productName']); ?></a></h3>
-														<div class="rating rateit-small"></div>
 														<div class="description"></div>
-
-														<div class="product-price">
-															<span class="price">
-																$ .<?php echo htmlentities($row['productPrice']); ?> </span>
-															<span class="price-before-discount">$.<?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
-
-														</div>
-
 													</div>
 													<div class="action"><a href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="lnk btn btn-primary">Agregar a carrito</a></div>
 												</div>
@@ -530,13 +495,6 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 												<div class="col col-xs-6">
 													<div class="product-info">
 														<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>"><?php echo htmlentities($row['productName']); ?></a></h3>
-														<div class="rating rateit-small"></div>
-														<div class="product-price">
-															<span class="price">
-																$. <?php echo htmlentities($row['productPrice']); ?>
-															</span>
-
-														</div><!-- /.product-price -->
 														<div class="action"><a href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="lnk btn btn-primary">Agregar a carrito</a></div>
 													</div>
 												</div><!-- /.col -->
@@ -549,7 +507,6 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 							</div><?php } ?>
 					</div>
 				</section>
-				<?php include('includes/brands-slider.php'); ?>
 			</div>
 		</div>
 		<?php include('includes/footer.php'); ?>
