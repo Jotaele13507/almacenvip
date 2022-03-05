@@ -68,7 +68,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<th>Dirección de envío</th>
 												<th>Producto </th>
 												<th>Cantidad </th>
-												<th>Monto </th>
+												
 												<th>Fecha de pedido</th>
 												<th>Acción</th>
 
@@ -79,7 +79,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 										<tbody>
 											<?php
 											$status = 'Pendiente';
-											$query = mysqli_query($con, "select users.name as username,users.email as useremail,users.contactno as usercontact,users.shippingAddress as shippingaddress,users.shippingCity as shippingcity,users.shippingState as shippingstate,users.shippingPincode as shippingpincode,products.productName as productname,products.shippingCharge as shippingcharge,orders.quantity as quantity,orders.orderDate as orderdate,products.productPrice as productprice,orders.id as id  from orders join users on  orders.userId=users.id join products on products.id=orders.productId where orders.orderStatus='$status' or orders.orderStatus is null");
+											$query = mysqli_query($con, "select users.name as username,users.email as useremail,users.contactno as usercontact,users.shippingAddress as shippingaddress,users.shippingCity as shippingcity,users.shippingState as shippingstate,users.shippingPincode as shippingpincode,products.productName as productname,orders.quantity as quantity,orders.orderDate as orderdate,orders.id as id  from orders join users on  orders.userId=users.id join products on products.id=orders.productId where orders.orderStatus='$status' or orders.orderStatus is null");
 											$cnt = 1;
 											while ($row = mysqli_fetch_array($query)) {
 											?>
@@ -90,7 +90,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 													<td><?php echo htmlentities($row['shippingaddress'] . "," . $row['shippingcity'] . "," . $row['shippingstate'] . "-" . $row['shippingpincode']); ?></td>
 													<td><?php echo htmlentities($row['productname']); ?></td>
 													<td><?php echo htmlentities($row['quantity']); ?></td>
-													<td>$<?php echo htmlentities($row['quantity'] * $row['productprice'] + $row['shippingcharge']); ?></td>
+													
 													<td><?php echo htmlentities($row['orderdate']); ?></td>
 													<td> <a href="updateordernuevo.php?oid=<?php echo htmlentities($row['id']); ?>" title="Update order" target="_blank"><i class="icon-edit"></i></a>
 													</td>

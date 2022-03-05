@@ -91,9 +91,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 					<th class="cart-product-name item">Nombre de producto</th>
 			
 					<th class="cart-qty item">Cantidad</th>
-					<th class="cart-sub-total item">Precio unitario</th>
-					<th class="cart-total item">Total</th>
-					<th class="cart-total item">Método de pago</th>
+
 					<th class="cart-description item">Fecha de pedido</th>
 					<th class="cart-total last-item">Acción</th>
 				</tr>
@@ -107,7 +105,7 @@ $ret = mysqli_query($con,"select t.email,t.id from (select usr.email,odrs.id fro
 $num=mysqli_num_rows($ret);
 if($num>0)
 {
-$query=mysqli_query($con,"select products.productImage1 as pimg1,products.productName as pname,orders.productId as opid,orders.quantity as qty,products.productPrice as pprice,orders.paymentMethod as paym,orders.orderDate as odate,orders.id as orderid from orders join products on orders.productId=products.id where orders.id='$orderid' and orders.paymentMethod is not null");
+$query=mysqli_query($con,"select products.productImage1 as pimg1,products.productName as pname,orders.productId as opid,orders.quantity as qty,orders.orderDate as odate,orders.id as orderid from orders join products on orders.productId=products.id where orders.id='$orderid'");
 $cnt=1;
 while($row=mysqli_fetch_array($query))
 {
@@ -128,9 +126,7 @@ while($row=mysqli_fetch_array($query))
 					<td class="cart-product-quantity">
 						<?php echo $qty=$row['qty']; ?>   
 		            </td>
-					<td class="cart-product-sub-total"><?php echo $price=$row['pprice']; ?>  </td>
-					<td class="cart-product-grand-total"><?php echo $qty*$price;?></td>
-					<td class="cart-product-sub-total"><?php echo $row['paym']; ?>  </td>
+
 					<td class="cart-product-sub-total"><?php echo $row['odate']; ?>  </td>
 					
 					<td>
@@ -138,7 +134,7 @@ while($row=mysqli_fetch_array($query))
 					Seguimiento</td>
 				</tr>
 <?php $cnt=$cnt+1;} } else { ?>
-				<tr><td colspan="8">Either order id or  Registered email id is invalid</td></tr>
+				<tr><td colspan="8">Nro de Orden o Correo electrónico inválidos.</td></tr>
 				<?php } ?>
 			</tbody><!-- /tbody -->
 		</table><!-- /table -->
@@ -150,7 +146,7 @@ while($row=mysqli_fetch_array($query))
 		</div> <!-- /.row -->
 		</form>
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
-<?php echo include('includes/brands-slider.php');?>
+
 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
 </div><!-- /.body-content -->
 <?php include('includes/footer.php');?>

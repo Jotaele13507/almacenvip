@@ -12,7 +12,7 @@
 				<ul id="togglePages" class="collapse unstyled">
 					<li>
 						<a href="todays-orders.php">
-							<i class="icon-tasks"></i>
+							<i class="icon-time"></i>
 							Pedidos de hoy
 							<?php
 							$f1 = "00:00:00";
@@ -28,7 +28,7 @@
 					</li>
 					<li>
 						<a href="pending-orders.php">
-							<i class="icon-tasks"></i>
+							<i class="icon-list-ol"></i>
 							Pedidos Pendientes
 							<?php
 							$status = 'Pendiente';
@@ -49,6 +49,18 @@
 
 						</a>
 					</li>
+					<li>
+						<a href="decline-orders.php">
+							<i class="icon-remove-sign "></i>
+							Pedidos Denegados
+							<?php
+							$status = 'Denegado';
+							$rt = mysqli_query($con, "SELECT * FROM Orders where orderStatus='$status'");
+							$num2 = mysqli_num_rows($rt); { ?><b class="label orange pull-right"><?php echo htmlentities($num2); ?></b>
+							<?php } ?>
+
+						</a>
+					</li>
 				</ul>
 			</li>
 
@@ -63,7 +75,8 @@
 
 		<ul class="widget widget-menu unstyled">
 			<li><a href="category.php"><i class="menu-icon icon-tasks"></i> Crear Categoría </a></li>
-			<li><a href="subcategory.php"><i class="menu-icon icon-tasks"></i>Sub Categoría </a></li>
+			<!-- <li><a href="subcategory.php"><i class="menu-icon icon-tasks"></i>Sub Categoría </a></li> -->
+			<li><a href="unit.php"><i class="menu-icon icon-paste"></i>Unidades </a></li>
 			<li><a href="insert-product.php"><i class="menu-icon icon-paste"></i>Insertar Producto </a></li>
 			<li><a href="manage-products.php"><i class="menu-icon icon-table"></i>Administrar Productos </a></li>
 
