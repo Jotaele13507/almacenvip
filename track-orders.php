@@ -83,8 +83,6 @@ Ingrese su código/número de pedido en el cuadro a continuación y presione ENT
 		</div><!-- /.sigin-in-->
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
 <div>
-
-<?php include('includes/brands-slider.php');?>
 </div>
 </div>
 <?php include('includes/footer.php');?>

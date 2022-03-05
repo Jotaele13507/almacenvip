@@ -235,7 +235,7 @@ if (isset($_GET['pid']) && $_GET['action'] == "wishlist") {
 					</div><!-- /.col -->
 				</div>
 			</div>
-			<?php include('includes/brands-slider.php'); ?>
+		
 
 		</div>
 	</div>

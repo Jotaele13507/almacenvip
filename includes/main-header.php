@@ -19,12 +19,12 @@ if (isset($_Get['action'])) {
 				<!-- ============================================================= LOGO ============================================================= -->
 				<div class="logo">
 					<a href="index.php">
-
-						<h2>ALMACEN VIP</h2>
-
+						<img src="assets/images/logovip/vip-03.png" alt="" width="150" height="125">
 					</a>
 				</div>
 			</div>
+			<br><br>
+
 			<div class="col-xs-12 col-sm-12 col-md-6 top-search-holder">
 				<div class="search-area">
 					<form name="search" method="post" action="search-result.php">

@@ -382,7 +382,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 						</div><?php } ?>
 				</div>
 			</section>
-			<?php include('includes/brands-slider.php'); ?>
+		
 		</div>
 	</div>
 	<?php include('includes/footer.php'); ?>

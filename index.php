@@ -34,7 +34,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 	<meta name="keywords" content="MediaCenter, Template, eCommerce">
 	<meta name="robots" content="all">
 
-	<title>TECHVISION - Pagina principal</title>
+	<title>ALMACÍN VIP - Pagina principal</title>
 
 	<!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -99,13 +99,13 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 						<div id="hero" class="homepage-slider3">
 							<div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
 								<div class="full-width-slider">
-									<div class="item" style="background-image: url(assets/images/sliders/slider-navidadp3.jpg);">
+									<div class="item" style="background-image: url(assets/images/sliders/01.jpg);">
 										<!-- /.container-fluid -->
 									</div><!-- /.item -->
 								</div><!-- /.full-width-slider -->
 
 								<div class="full-width-slider">
-									<div class="item full-width-slider" style="background-image: url(assets/images/sliders/slider-ps5.jpg);">
+									<div class="item full-width-slider" style="background-image: url(assets/images/sliders/fur1.jpg);">
 									</div><!-- /.item -->
 								</div><!-- /.full-width-slider -->
 
@@ -121,13 +121,13 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 										<div class="info-box">
 											<div class="row">
 												<div class="col-xs-2">
-													<i class="icon fa fa-dollar"></i>
+													<i class="icon fa fa-bell"></i>
 												</div>
 												<div class="col-xs-10">
-													<h4 class="info-box-heading green">Garantia</h4>
+													<h4 class="info-box-heading green">MENSAJE</h4>
 												</div>
 											</div>
-											<h6 class="text">30 dias de protección al cliente, programa de afiliados.</h6>
+											<h6 class="text" align=justify>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h6>
 										</div>
 									</div><!-- .col -->
 
@@ -135,13 +135,13 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 										<div class="info-box">
 											<div class="row">
 												<div class="col-xs-2">
-													<i class="icon fa fa-truck"></i>
+													<i class="icon fa fa-bell"></i>
 												</div>
 												<div class="col-xs-10">
-													<h4 class="info-box-heading orange">Envio gratis</h4>
+													<h4 class="info-box-heading orange">MENSAJE</h4>
 												</div>
 											</div>
-											<h6 class="text">envio gratis en pedidos mayores a $.600.00</h6>
+											<h6 class="text" align=justify>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </h6>
 										</div>
 									</div><!-- .col -->
 
@@ -149,13 +149,13 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
 										<div class="info-box">
 											<div class="row">
 												<div class="col-xs-2">
-													<i class="icon fa fa-gift"></i>
+													<i class="icon fa fa-bell"></i>
 												</div>
 												<div class="col-xs-10">
-													<h4 class="info-box-heading red">Oferta Especial</h4>
+													<h4 class="info-box-heading red">MENSAJE</h4>
 												</div>
 											</div>
-											<h6 class="text">Todos los productos 20% de dscto </h6>
+											<h6 class="text" align=justify>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </h6>
 										</div>
 									</div><!-- .col -->
 								</div><!-- /.row -->

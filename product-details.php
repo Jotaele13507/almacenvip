@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 	<meta name="author" content="">
 	<meta name="keywords" content="MediaCenter, Template, eCommerce">
 	<meta name="robots" content="all">
-	<title>Product Details</title>
+	<title>Detalles del Producto</title>
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/main.css">
 	<link rel="stylesheet" href="assets/css/green.css">
@@ -90,66 +90,23 @@ if (isset($_POST['submit'])) {
 	</header>
 
 	<!-- ============================================== HEADER : END ============================================== -->
-	<div class="breadcrumb">
-		<div class="container">
-			<div class="breadcrumb-inner">
-				<?php
-				$ret = mysqli_query($con, "select category.categoryName as catname,products.productName as pname from products join category on category.id=products.category where products.id='$pid'");
-				while ($rw = mysqli_fetch_array($ret)) {
-
-				?>
-
-
-					<ul class="list-inline list-unstyled">
-						<li><a href="index.php">Inicio</a></li>
-						<li><?php echo htmlentities($rw['catname']); ?></a></li>
-
-						<li class='active'><?php echo htmlentities($rw['pname']); ?></li>
-					</ul>
-				<?php } ?>
-			</div><!-- /.breadcrumb-inner -->
-		</div><!-- /.container -->
-	</div><!-- /.breadcrumb -->
 	<div class="body-content outer-top-xs">
 		<div class='container'>
 			<div class='row single-product outer-bottom-sm '>
-				<div class='col-md-3 sidebar'>
-					<div class="sidebar-module-container">
-
-
-						<!-- ==============================================CATEGORY============================================== -->
-						<div class="sidebar-widget outer-bottom-xs wow fadeInUp">
-							<h3 class="section-title">Categoría</h3>
-							<div class="sidebar-widget-body m-t-10">
-								<div class="accordion">
-
-									<?php $sql = mysqli_query($con, "select id,categoryName  from category");
-									while ($row = mysqli_fetch_array($sql)) {
-									?>
-										<div class="accordion-group">
-											<div class="accordion-heading">
-												<a href="category.php?cid=<?php echo $row['id']; ?>" class="accordion-toggle collapsed">
-													<?php echo $row['categoryName']; ?>
-												</a>
-											</div>
-
-										</div>
-									<?php } ?>
-								</div>
-							</div>
-						</div>
-						<!-- ============================================== CATEGORY : END ============================================== -->
-						<!-- ============================================== HOT DEALS ============================================== -->
-						<!-- ============================================== COLOR: END ============================================== -->
-					</div>
-				</div><!-- /.sidebar -->
+				<!-- ==============================================CATEGORY============================================== -->
+				<div class="col-xs-12 col-sm-12 col-md-3 sidebar">
+					<!-- ================================== TOP NAVIGATION ================================== -->
+					<?php include('includes/side-menu.php'); ?>
+					<!--MENÚ DE LA IZQUIERDA CON LAS CATEGORIAS -->
+					<!-- ================================== TOP NAVIGATION : END ================================== -->
+				</div><!-- /.sidemenu-holder -->
+				<!-- ============================================== CATEGORY : END ============================================== -->
 				<?php
-				$ret = mysqli_query($con, "select * from products where id='$pid'");
+				$ret = mysqli_query($con, "select products.*,category.categoryName as catname,category.id as cid,unit.unitType as uType,unit.id as unitid from products join category on category.id=products.category join unit on unit.id=products.unit where products.id='$pid'");
+				//Query que busca los productos y compara el campo unit de la tabla products con el campo unitType de la tabla unit para mostrar el tipo de unidad en vez del id de la unidad.
 				while ($row = mysqli_fetch_array($ret)) {
 
 				?>
-
-
 					<div class='col-md-9'>
 						<div class="row  wow fadeInUp">
 							<div class="col-xs-12 col-sm-6 col-md-5 gallery-holder">
@@ -166,10 +123,6 @@ if (isset($_POST['submit'])) {
 									</div><!-- /.single-product-slider -->
 								</div>
 							</div>
-
-
-
-
 							<div class='col-sm-6 col-md-7 product-info-block'>
 								<div class="product-info">
 									<h1 class="name"><?php echo htmlentities($row['productName']); ?></h1>
@@ -187,7 +140,7 @@ if (isset($_POST['submit'])) {
 										<div class="row">
 											<div class="col-sm-3">
 												<div class="stock-box">
-													<span class="label">Marca :</span>
+													<span class="label">Marca:</span>
 												</div>
 											</div>
 											<div class="col-sm-9">
@@ -206,7 +159,7 @@ if (isset($_POST['submit'])) {
 											</div>
 											<div class="col-sm-9">
 												<div class="stock-box">
-													<span class="value"><?php echo htmlentities($row['unit']); ?></span>
+													<span class="value"><?php echo htmlentities($row['uType']); ?></span>
 												</div>
 											</div>
 										</div><!-- /.row -->
@@ -215,7 +168,7 @@ if (isset($_POST['submit'])) {
 										<div class="row">
 											<div class="col-sm-3">
 												<div class="stock-box">
-													<span class="label">CANT. DISPONIBLE :</span>
+													<span class="label">CANT. DISPONIBLE:</span>
 												</div>
 											</div>
 											<div class="col-sm-9">
@@ -227,7 +180,6 @@ if (isset($_POST['submit'])) {
 									</div>
 									<div class="quantity-container info-container">
 										<div class="row">
-
 											<div class="col-sm-2">
 												<span class="label">Cantidad :</span>
 											</div>
@@ -235,20 +187,32 @@ if (isset($_POST['submit'])) {
 											<div class="col-sm-2">
 												<div class="cart-quantity">
 													<div class="quant-input">
-														<div class="arrows">
+														<?php
+														$proavai = $row['productAvailability'];
+														if ($proavai >= 1) {
+															echo '<div class="arrows">
 															<div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
 															<div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
-														</div>
-														<input type="text" value="1">
+														</div>';
+															echo '<input type="text" value="1">';
+														} else {
+															echo '<span> No se puede pedir este producto </span>';;
+														}
+														?>
 													</div>
 												</div>
 											</div>
-
 											<div class="col-sm-7">
-												<a href="product-details.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> Agregar a compras</a>
+												<!-- Aquí debe ir una condición que no deje comprar si la cantidad disponible es 0-->
+												<?php
+												$proavai = $row['productAvailability'];
+												$di =  $row['id'];
+												if ($proavai >= 1) {
+													echo '<a href="product-details.php?page=product&action=add&id=' . $di . '"class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> Agregar a compras</a>';
+												} else {
+												}
+												?>
 											</div>
-
-
 										</div><!-- /.row -->
 									</div><!-- /.quantity-container -->
 								</div><!-- /.product-info -->

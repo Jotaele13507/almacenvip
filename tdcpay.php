@@ -163,7 +163,7 @@ if (strlen($_SESSION['login']) == 0) {
                     </div><!-- /.row -->
                 </div><!-- /.checkout-box -->
                 <!-- ============================================== BRANDS CAROUSEL ============================================== -->
-                <?php echo include('includes/brands-slider.php'); ?>
+               
                 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
             </div><!-- /.container -->
         </div><!-- /.body-content -->

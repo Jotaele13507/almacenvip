@@ -64,7 +64,7 @@ if (isset($_POST['login'])) {
 	<meta name="keywords" content="MediaCenter, Template, eCommerce">
 	<meta name="robots" content="all">
 
-	<title>TECHVISION | Registro | Iniciar Sesión</title>
+	<title>ALMACÉN VIP | Registro | Iniciar Sesión</title>
 
 	<!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -242,7 +242,7 @@ if (isset($_POST['login'])) {
 					<!-- create a new account -->
 				</div><!-- /.row -->
 			</div>
-			<?php include('includes/brands-slider.php'); ?>
+			
 		</div>
 	</div>
 	<?php include('includes/footer.php'); ?>

@@ -44,7 +44,8 @@ if (isset($_POST['ordersubmit'])) {
 
 
 			mysqli_query($con, "insert into orders(userId,productId,quantity) values('" . $_SESSION['id'] . "','$qty','$val34')");
-			header('location:payment-methodnuevo.php');
+			unset($_SESSION['cart']);
+			header('location:order-history.php');
 		}
 	}
 }
@@ -145,7 +146,7 @@ if (isset($_POST['ordersubmit'])) {
 												<th class="cart-product-name item">Nombre de producto</th>
 
 												<th class="cart-qty item">Cantidad</th>
-												<th class="cart-sub-total item">Unidad</th>
+
 											</tr>
 										</thead><!-- /thead -->
 										<tfoot>
@@ -194,20 +195,7 @@ if (isset($_POST['ordersubmit'])) {
 
 																																													$_SESSION['sid'] = $pd;
 																																													?></a></h4>
-															<div class="row">
-																<div class="col-sm-4">
-																	<div class="rating rateit-small"></div>
-																</div>
-																<div class="col-sm-8">
-																	<?php $rt = mysqli_query($con, "select * from productreviews where productId='$pd'");
-																	$num = mysqli_num_rows($rt); {
-																	?>
-																		<div class="reviews">
-																			( <?php echo htmlentities($num); ?> Calificaciones )
-																		</div>
-																	<?php } ?>
-																</div>
-															</div><!-- /.row -->
+
 
 														</td>
 														<td class="cart-product-quantity">
@@ -220,7 +208,7 @@ if (isset($_POST['ordersubmit'])) {
 
 															</div>
 														</td>
-														<td class="cart-product-grand-total"><span class="cart-grand-total-price"><?php echo ($_SESSION['cart'][$row['id']]['quantity'] * $row['productPrice'] + $row['shippingCharge']); ?></span></td>
+
 													</tr>
 
 											<?php }
@@ -294,13 +282,12 @@ if (isset($_POST['ordersubmit'])) {
 							</tbody><!-- /tbody -->
 						</table><!-- /table -->
 					</div>
-					<div class="col-md-4 col-sm-12 cart-shopping-total">
+					<div class="col-md-4 col-sm-12 estimate-ship-tax">
 						<table class="table table-bordered">
 							<thead>
 								<tr>
 									<th>
-
-
+										<span class="estimate-title">FINALIZAR PEDIDO</span>
 									</th>
 								</tr>
 							</thead><!-- /thead -->
@@ -322,7 +309,7 @@ if (isset($_POST['ordersubmit'])) {
 				</div>
 			</div>
 			</form>
-			<?php echo include('includes/brands-slider.php'); ?>
+
 		</div>
 	</div>
 	<?php include('includes/footer.php'); ?>

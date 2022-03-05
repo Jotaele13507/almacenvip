@@ -7,16 +7,27 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 	if (isset($_POST['submit'])) {
 		$category = $_POST['category'];
+		$productcode = $_POST['productCode'];
+		$productlocation = $_POST['productLocation'];
 		$productname = $_POST['productName'];
 		$productcompany = $_POST['productCompany'];
+		$productprice = $_POST['productPrice'];
 		$productdescription = $_POST['productDescription'];
+		$productimage1 = $_FILES["productimage1"]["name"];
 		$productavailability = $_POST['productAvailability'];
 		$unit = $_POST['unit'];
 		//for getting product id
 		$query = mysqli_query($con, "select max(id) as pid from products");
 		$result = mysqli_fetch_array($query);
 		$productid = $result['pid'] + 1;
-		$sql = mysqli_query($con, "insert into products(category,productName,productCompany,productDescription,productAvailability,unit) values('$category','$productname','$productcompany','$productdescription','$productavailability','$unit')");
+		$dir = "productimages/$productid";
+		if (!is_dir($dir)) {
+			mkdir("productimages/" . $productid);
+		}
+
+		move_uploaded_file($_FILES["productimage1"]["tmp_name"], "productimages/$productid/" . $_FILES["productimage1"]["name"]);
+
+		$sql = mysqli_query($con, "insert into products(category,productCode,productLocation,productName,productCompany,productPrice,productDescription,productImage1,productAvailability,unit) values('$category','$productcode','$productlocation','$productname','$productcompany','$productprice','$productdescription','$productimage1','$productavailability','$unit')");
 		$_SESSION['msg'] = "Product Inserted Successfully !!";
 	}
 
@@ -28,7 +39,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Admin| Insert Product</title>
+		<title>Admin| Insertar Producto</title>
 		<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link type="text/css" href="css/theme.css" rel="stylesheet">
@@ -91,6 +102,20 @@ if (strlen($_SESSION['alogin']) == 0) {
 										</div>
 
 										<div class="control-group">
+											<label class="control-label" for="basicinput">Código del producto</label>
+											<div class="controls">
+												<input type="text" name="productCode" placeholder="Ingrese el código del producto" class="span8 tip" required>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Ubicación del producto</label>
+											<div class="controls">
+												<input type="text" name="productLocation" placeholder="Ingrese la Ubicación del producto" class="span8 tip" required>
+											</div>
+										</div>
+
+										<div class="control-group">
 											<label class="control-label" for="basicinput">Nombre del producto</label>
 											<div class="controls">
 												<input type="text" name="productName" placeholder="Ingrese nombre del producto" class="span8 tip" required>
@@ -98,9 +123,16 @@ if (strlen($_SESSION['alogin']) == 0) {
 										</div>
 
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Marca del Producto</label>
+											<label class="control-label" for="basicinput">Marca del producto</label>
 											<div class="controls">
 												<input type="text" name="productCompany" placeholder="Ingrese marca del producto" class="span8 tip" required>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Precio del producto</label>
+											<div class="controls">
+												<input type="text" name="productPrice" placeholder="Ingrese precio del producto" class="span8 tip" required>
 											</div>
 										</div>
 
@@ -112,7 +144,14 @@ if (strlen($_SESSION['alogin']) == 0) {
 										</div>
 
 										<div class="control-group">
-											<label class="control-label" for="basicinput">Cantidad Disponible</label>
+											<label class="control-label" for="basicinput">Imagen del producto</label>
+											<div class="controls">
+												<input type="file" name="productimage1" id="productimage1" value="" class="span8 tip" required>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<label class="control-label" for="basicinput">Cantidad disponible</label>
 											<div class="controls">
 												<input type=number name="productAvailability" id="productAvailability" class="span8 tip" required>
 											</div>
@@ -140,11 +179,6 @@ if (strlen($_SESSION['alogin']) == 0) {
 									</form>
 								</div>
 							</div>
-
-
-
-
-
 						</div>
 						<!--/.content-->
 					</div>
