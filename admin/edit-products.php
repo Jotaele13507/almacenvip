@@ -152,7 +152,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 											<div class="control-group">
 												<label class="control-label" for="basicinput">Cantidad Disponible</label>
 												<div class="controls">
-													<input type="text" name="productAvailability" placeholder="Ingrese precio del producto" value="<?php echo htmlentities($row['productPrice']); ?>" class="span8 tip" required>
+													<input type="text" name="productAvailability" placeholder="Ingrese precio del producto" value="<?php echo htmlentities($row['productAvailability']); ?>" class="span8 tip" required>
 												</div>
 											</div>
 

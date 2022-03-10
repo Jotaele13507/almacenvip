@@ -8,8 +8,9 @@ if (strlen($_SESSION['alogin']) == 0) {
   if (isset($_POST['submit2'])) {
     $status = $_POST['status'];
     $remark = $_POST['remark']; //space char
+    $adminid = $_SESSION['id'];
 
-    $query = mysqli_query($con, "insert into ordertrackhistory(orderId,status,remark) values('$oid','$status','$remark')");
+    $query = mysqli_query($con, "insert into ordertrackhistory(orderId,status,remark,adminID) values('$oid','$status','$remark','$adminid')");
     $sql = mysqli_query($con, "update orders set orderStatus='$status' where id='$oid'");
     echo "<script>alert('Orden Actualizada con Exito');</script>";
     //}
@@ -68,14 +69,16 @@ if (strlen($_SESSION['alogin']) == 0) {
                         <td colspan="2" class="fontkink2" style="padding-left:0px;">
                           <div class="fontpink1"> <b>Actualizar estado de pedido !</b></div>
                         </td>
-
                       </tr>
                       <tr height="30">
                         <td class="fontkink2"><b>Nro Orden:</b></td>
                         <td class="fontkink"><?php echo $oid; ?></td>
                       </tr>
                       <?php
-                      $ret = mysqli_query($con, "SELECT * FROM ordertrackhistory WHERE orderId='$oid'");
+                      //$ret = mysqli_query($con, "SELECT * FROM ordertrackhistory WHERE orderId='$oid'");
+                      $ret = mysqli_query($con, "select ordertrackhistory.*,admin.id as aid,admin.username as auser from ordertrackhistory join admin on admin.id=ordertrackhistory.adminID where ordertrackhistory.orderId='$oid'");
+                      //Busca los registro de la tabla ordertrackhistory y admin, luego muestra los datos que pido de ambas tablas comparando el id de la tabla admin
+                      //con el admindID de la tabla ordertrackhistory para saber el nombre del usuario administrador que está haciendo los cambios.
                       while ($row = mysqli_fetch_array($ret)) {
                       ?>
 
@@ -93,28 +96,45 @@ if (strlen($_SESSION['alogin']) == 0) {
                         </tr>
 
 
+                        <tr height="20">
+                          <td class="fontkink1"><b>Actualizado por:</b></td>
+                          <td class="fontkink"><?php echo $row['auser']; ?></td>
+                        </tr>
+
+
                         <tr>
                           <td colspan="2">
                             <hr />
                           </td>
                         </tr>
                       <?php } ?>
+
+
                       <?php
                       $st = 'Entregado';
                       $sn = 'Denegado';
-                      $rt = mysqli_query($con, "SELECT * FROM orders WHERE id='$oid'");
+                      //$rt = mysqli_query($con, "SELECT * FROM orders WHERE id='$oid'"); //Aqui debe buscar el ID del admin
+                      $rt = mysqli_query($con, "select orders.*,products.id as pid,products.productAvailability as pav from orders join products on products.id=orders.productId where orders.id='$oid'");
                       while ($num = mysqli_fetch_array($rt)) {
                         $currrentSt = $num['orderStatus'];
+                        $pid = $num['pid'];
+                        $qo = $num['quantity'];
+                        $qp = $num['pav'];
+                        $tt = $qp - $qo;
                       }
-                      if ($st == $currrentSt) { ?>
+                      if ($st == $currrentSt) { //Aquí debe ir la condición para restar al inventario, orders.quantity - products.productAvailability
+
+                        $qtt = mysqli_query($con, "update products set productAvailability='$tt' where id='$pid'");
+
+                      ?>
                         <tr>
                           <td colspan="2"><b>
                               Producto entregado </b></td>
                         <?php } elseif ($sn == $currrentSt) { ?>
-                          <tr>
+                        <tr>
                           <td colspan="2"><b>
                               Producto Denegado </b></td>
-                       <?php } else { ?>
+                        <?php } else { ?>
 
                         <tr height="50">
                           <td class="fontkink1">Estado: </td>
@@ -128,12 +148,13 @@ if (strlen($_SESSION['alogin']) == 0) {
                             </span></td>
                         </tr>
 
-                        <tr style=''>
+                        <tr>
                           <td class="fontkink1">Observaciones:</td>
                           <td class="fontkink" align="justify"><span class="fontkink">
                               <textarea cols="50" rows="7" name="remark" required="required"></textarea>
                             </span></td>
                         </tr>
+
                         <tr>
                           <td class="fontkink1">&nbsp;</td>
                           <td>&nbsp;</td>
